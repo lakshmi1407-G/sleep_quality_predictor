@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sleep Quality Predictor</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:Arial, sans-serif;
+min-height:100vh;
+background:linear-gradient(to bottom,#020111 0%,#191621 70%,#2d2b45 100%);
+overflow-x:hidden;
+}
+
+/* Stars background */
+
+.stars{
+width:100%;
+height:100%;
+background:transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+position:fixed;
+top:0;
+left:0;
+z-index:-2;
+}
+
+/* Moon */
+
+.moon{
+position:fixed;
+top:80px;
+right:120px;
+width:120px;
+height:120px;
+background:radial-gradient(circle,#fff 40%,#f5f5f5 60%,#dcdcdc 100%);
+border-radius:50%;
+box-shadow:0 0 40px rgba(255,255,255,0.8);
+z-index:-1;
+}
+
+/* Form Container */
+
+.container{
+width:55%;
+margin:40px auto;
+background:rgba(255,255,255,0.95);
+padding:30px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+h1{
+text-align:center;
+color:#4338ca;
+margin-bottom:8px;
+}
+
+.subtitle{
+text-align:center;
+color:#555;
+margin-bottom:25px;
+}
+
+label{
+font-weight:bold;
+display:block;
+margin-top:15px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:6px;
+border-radius:8px;
+border:1px solid #ccc;
+background:#f8fafc;
+}
+
+input:focus,select:focus{
+outline:none;
+border-color:#6366f1;
+background:white;
+}
+
+.helper{
+font-size:13px;
+color:#6b7280;
+margin-top:3px;
+}
+
+button{
+width:100%;
+padding:13px;
+margin-top:22px;
+background:linear-gradient(to right,#4f46e5,#7c3aed);
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.result{
+margin-top:20px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:green;
+}
+
+.tip{
+margin-top:15px;
+padding:15px;
+background:#eef2ff;
+border-left:5px solid #4f46e5;
+border-radius:8px;
+line-height:1.6;
+}
+
+@media(max-width:900px){
+.container{
+width:90%;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+<div class="moon"></div>
+
+<div class="container">
+
+<h1>Sleep Quality Predictor</h1>
+<p class="subtitle">Monitor and improve your sleep health</p>
+
+<form action="/predict" method="post">
+
+<label>Gender</label>
+<select name="gender" required>
+<option value="" disabled selected>Select gender</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+<div class="helper">Choose your gender</div>
+
+<label>Age</label>
+<input type="number" name="age" placeholder="Example: 21" required>
+<div class="helper">Enter age in years</div>
+
+<label>Occupation</label>
+<select name="occupation" required>
+<option value="" disabled selected>Select occupation</option>
+<option value="Student">Student</option>
+<option value="Doctor">Doctor</option>
+<option value="Engineer">Engineer</option>
+<option value="Teacher">Teacher</option>
+<option value="Software Engineer">Software Engineer</option>
+<option value="Lawyer">Lawyer</option>
+<option value="Scientist">Scientist</option>
+<option value="Manager">Manager</option>
+<option value="Office Worker">Office Worker</option>
+</select>
+<div class="helper">Select the closest occupation</div>
+
+<label>Sleep Duration</label>
+<input type="number" step="0.1" name="sleep_duration" placeholder="Example: 7.5 hours" required>
+<div class="helper">Usually 6 to 9 hours</div>
+
+<label>Physical Activity Level</label>
+<input type="number" name="physical_activity" placeholder="Example: 30 minutes" required>
+<div class="helper">Minutes of activity per day</div>
+
+<label>Stress Level</label>
+<input type="number" name="stress_level" min="1" max="10" placeholder="1 to 10" required>
+<div class="helper">1 = low stress, 10 = high stress</div>
+
+<label>Heart Rate</label>
+<input type="number" name="heart_rate" placeholder="Example: 72 bpm" required>
+<div class="helper">Normal range 60 to 100 bpm</div>
+
+<label>Daily Steps</label>
+<input type="number" name="daily_steps" placeholder="Example: 8000 steps" required>
+<div class="helper">Typical range 2000 to 15000</div>
+
+<button type="submit">Predict Sleep Quality</button>
+
+</form>
+
+{% if prediction_text %}
+<div class="result">{{ prediction_text }}</div>
+{% endif %}
+
+{% if tip_text %}
+<div class="tip">{{ tip_text }}</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>
